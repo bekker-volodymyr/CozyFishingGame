@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d67450e5b899904e88e228721ef59c5, type: 3}
+  m_Name: Swordfish_SO
+  m_EditorClassIdentifier: 
+  Title: Swordfish
+  Description: With its iconic sword-like bill, the Swordfish is a formidable catch
+    for skilled anglers. Weighing between 200 to 600 kilograms, it's highly prized
+    for its size and succulent meat, commanding a premium price.
+  Rarity: 5
+  MaxWeight: 600
+  MinWeight: 200
+  PriceCoef: 3.5

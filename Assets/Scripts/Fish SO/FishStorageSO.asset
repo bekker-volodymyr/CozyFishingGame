@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88aeb760b8506cd4b972f4dc577515a3, type: 3}
+  m_Name: FishStorageSO
+  m_EditorClassIdentifier: 
+  fishes:
+  - {fileID: 11400000, guid: f307409bb95c87a45b6eea2a9a102a2a, type: 2}
+  - {fileID: 11400000, guid: a10b812eccde77a4dbeffc04accb1a8d, type: 2}
+  - {fileID: 11400000, guid: ac019ab23e35fb9469fd68928254cfd9, type: 2}
+  - {fileID: 11400000, guid: 71fbe09d3c34d534f917ee2989d315ed, type: 2}
+  - {fileID: 11400000, guid: 22bdae30cab921e468e2bea2955df36b, type: 2}
+  - {fileID: 11400000, guid: 39db625a9852bc946a4b84533a0fdf1b, type: 2}
+  - {fileID: 11400000, guid: 695e791274882034cb32fa461e3a6e2f, type: 2}
+  - {fileID: 11400000, guid: 5e5952d909eb97344bafbb33477f062a, type: 2}
+  - {fileID: 11400000, guid: 9ddcc47808cf27446bd4e8cfc4a5dd8c, type: 2}
+  - {fileID: 11400000, guid: 68c940065396a5b478650e0a3e7def3a, type: 2}
