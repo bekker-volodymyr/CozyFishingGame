@@ -17,8 +17,9 @@ public class CastingRodState : GameState
     {
         base.EnterState();
 
-        gameManager.distanceIndicator.gameObject.SetActive(true);
-        gameManager.distanceIndicator.value = 0;
+        gameManager.distanceIndicator.transform.parent.gameObject.SetActive(true);
+        gameManager.distanceIndicator.fillAmount = 0;
+        newValue = 0;
         Debug.Log("Start casting rod!");
     }
 
@@ -26,8 +27,6 @@ public class CastingRodState : GameState
     {
         base.ExitState();
 
-        gameManager.distanceIndicator.value = 0;
-        gameManager.distanceIndicator.gameObject.SetActive(false);
         gameManager.GenerateFish(newValue);
 
     }
@@ -36,14 +35,15 @@ public class CastingRodState : GameState
     {
         base.FrameUpdate();
 
-        if (gameManager.distanceIndicator.value >= 1) isGrow = false;
-        else if (gameManager.distanceIndicator.value <= 0) isGrow = true;
+        if (gameManager.distanceIndicator.fillAmount >= 1) isGrow = false;
+        else if (gameManager.distanceIndicator.fillAmount <= 0) isGrow = true;
 
         if (isGrow) newValue += speed * Time.deltaTime;
         else newValue -= speed * Time.deltaTime;
 
         if(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended) 
         {
+            gameManager.SetAnimatorState(1);
             stateMachine.ChangeState(gameManager.WaitForFishState);
         }
     }
@@ -52,6 +52,6 @@ public class CastingRodState : GameState
     {
         base.FrameLateUpdate();
 
-        gameManager.distanceIndicator.value = newValue;
+        gameManager.distanceIndicator.fillAmount = newValue;
     }
 }

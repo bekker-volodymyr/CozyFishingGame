@@ -12,17 +12,30 @@ public class FishingManager : MonoBehaviour
     public IdleState IdleState { get; set; }
     public CastingRodState CastingRodState { get; set; }
     public WaitForFishState WaitForFishState { get; set; }
+    public CatchingFishState CatchingFishState { get; set; }
     #endregion
 
     #region Casting Rod
 
-    [SerializeField] public Slider distanceIndicator;
+    // [SerializeField] public Slider distanceIndicator;
+    [SerializeField] public Image distanceIndicator;
 
     #endregion
 
     #region Generated Fish
     private FishSO catchedFish = null;
     private float catchedFishWeight = 0;
+    #endregion
+
+    #region Catching Fish
+    [SerializeField] public GameObject CatchingUI;
+    [SerializeField] public Image SuccessIndicator;
+    [field: SerializeField] public GameObject FishIndicator { get; set; }
+    [field: SerializeField] public GameObject RodIndicator { get; set; }
+    #endregion
+
+    #region Animations
+    [SerializeField] private Animator fisherAnimator;
     #endregion
 
     private void Start()
@@ -32,6 +45,7 @@ public class FishingManager : MonoBehaviour
         IdleState = new IdleState(StateMachine, this);
         CastingRodState = new CastingRodState(StateMachine, this);
         WaitForFishState = new WaitForFishState(StateMachine, this);
+        CatchingFishState = new CatchingFishState(StateMachine, this);
 
         StateMachine.Initialize(IdleState);
     }
@@ -117,5 +131,10 @@ public class FishingManager : MonoBehaviour
 
         // Now you have the selected fish and its weight
         Debug.Log("Generated fish: " + selectedFish.Title + ", Weight: " + weight);
+    }
+
+    public void SetAnimatorState(int state)
+    {
+        fisherAnimator.SetInteger("State", state);
     }
 }

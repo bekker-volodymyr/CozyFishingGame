@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaitForFishState : GameState
 {
-    private float secondsUntillCatch;
+    private float secondsUntillBite;
     private float countdownTimer;
+    private float catchDelay;
+    private bool isBites;
+    private float catchTimer;
     private bool countdownStarted;
 
     public WaitForFishState(StateMachine stateMachine, FishingManager gameManager) : base(stateMachine, gameManager)
@@ -16,13 +20,16 @@ public class WaitForFishState : GameState
     {
         base.EnterState();
 
-        secondsUntillCatch = Random.Range(1, 8);
+        secondsUntillBite = Random.Range(3, 8);
 
-        Debug.Log($"Wait for fish! {secondsUntillCatch} seconds");
+        catchDelay = 1f;
+        isBites = false;
+
+        Debug.Log($"Wait for fish! {secondsUntillBite} seconds");
 
         // Start the countdown timer
         countdownStarted = true;
-        countdownTimer = secondsUntillCatch;
+        countdownTimer = secondsUntillBite;
     }
 
     public override void ExitState()
@@ -39,6 +46,24 @@ public class WaitForFishState : GameState
     {
         base.FrameUpdate();
 
+        if (isBites)
+        {
+            if (Input.touchCount > 0)
+            {
+                Debug.Log("CATCH!");
+                stateMachine.ChangeState(gameManager.CatchingFishState);
+            }
+
+            catchTimer -= Time.deltaTime;
+
+            if (catchTimer <= 0)
+            {
+                Debug.Log("Fish lost!");
+                stateMachine.ChangeState(gameManager.IdleState);
+            }
+
+        }
+
         if (countdownStarted)
         {
             countdownTimer -= Time.deltaTime;
@@ -48,23 +73,16 @@ public class WaitForFishState : GameState
             {
                 // Notify the player that the countdown has ended
                 Debug.Log("PULL!");
-
-                // Check if the player touches the screen
-                if (Input.touchCount > 0)
-                {
-                    Debug.Log("CATCH!");
-                    stateMachine.ChangeState(gameManager.IdleState);
-                }
-                else
-                {
-                    Debug.Log("Fish lost!");
-                    stateMachine.ChangeState(gameManager.IdleState);
-                }
+                isBites = true;
+                catchTimer = catchDelay;
+                countdownStarted = false;
             }
-            else if(Input.touchCount > 0)
+            else if (Input.touchCount > 0)
             {
-                Debug.Log("Rod back!");
-                stateMachine.ChangeState(gameManager.IdleState);
+                {
+                    Debug.Log("Rod back!");
+                    stateMachine.ChangeState(gameManager.IdleState);
+                }
             }
         }
     }

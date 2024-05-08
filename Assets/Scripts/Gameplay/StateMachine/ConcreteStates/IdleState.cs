@@ -11,6 +11,8 @@ public class IdleState : GameState
     public override void EnterState()
     {
         base.EnterState();
+
+        gameManager.distanceIndicator.transform.parent.gameObject.SetActive(false);
     }
 
     public override void ExitState()
