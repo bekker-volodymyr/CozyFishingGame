@@ -12,7 +12,7 @@ public class IdleState : GameState
     {
         base.EnterState();
 
-        gameManager.distanceIndicator.transform.parent.gameObject.SetActive(false);
+        gameManager.SetIdleState();
     }
 
     public override void ExitState()
@@ -26,7 +26,7 @@ public class IdleState : GameState
 
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            stateMachine.ChangeState(gameManager.CastingRodState);
+            stateMachine.ChangeState(gameManager.CastState);
         }
     }
 

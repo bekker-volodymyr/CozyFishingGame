@@ -8,44 +8,59 @@ public class FishingManager : MonoBehaviour
     [SerializeField] private FishStorageSO fishes;
 
     #region State Machine
+
     public StateMachine StateMachine { get;set; }
     public IdleState IdleState { get; set; }
-    public CastingRodState CastingRodState { get; set; }
-    public WaitForFishState WaitForFishState { get; set; }
-    public CatchingFishState CatchingFishState { get; set; }
+    public CastState CastState { get; set; }
+    public WaitState WaitState { get; set; }
+    public CatchState CatchState { get; set; }
+
     #endregion
 
-    #region Casting Rod
+    #region Cast
 
-    // [SerializeField] public Slider distanceIndicator;
+    [Space]
     [SerializeField] public Image distanceIndicator;
 
     #endregion
 
     #region Generated Fish
+
     private FishSO catchedFish = null;
     private float catchedFishWeight = 0;
+
     #endregion
 
-    #region Catching Fish
+    #region Catch
+
+    [Space]
     [SerializeField] public GameObject CatchingUI;
     [SerializeField] public Image SuccessIndicator;
     [field: SerializeField] public GameObject FishIndicator { get; set; }
     [field: SerializeField] public GameObject RodIndicator { get; set; }
+    [SerializeField] public RodScript rodScript;
     #endregion
 
-    #region Animations
+    #region Fisher Components
+
+    [Space]
+    [SerializeField] private GameObject fisher;
     [SerializeField] private Animator fisherAnimator;
+    [SerializeField] private SpriteRenderer fisherSpriteRenderer;
+    [SerializeField] private FisherScript fisherScript;
+
     #endregion
 
     private void Start()
-    { 
+    {
+        fisherScript.castAnimationEnds += OnCastAnimationEnds;
+
         StateMachine = new StateMachine();
 
         IdleState = new IdleState(StateMachine, this);
-        CastingRodState = new CastingRodState(StateMachine, this);
-        WaitForFishState = new WaitForFishState(StateMachine, this);
-        CatchingFishState = new CatchingFishState(StateMachine, this);
+        CastState = new CastState(StateMachine, this);
+        WaitState = new WaitState(StateMachine, this);
+        CatchState = new CatchState(StateMachine, this);
 
         StateMachine.Initialize(IdleState);
     }
@@ -136,5 +151,37 @@ public class FishingManager : MonoBehaviour
     public void SetAnimatorState(int state)
     {
         fisherAnimator.SetInteger("State", state);
+    }
+
+    public void SetIdleState()
+    {
+        SetAnimatorState(0);
+        distanceIndicator.transform.parent.gameObject.SetActive(false);
+        CatchingUI.SetActive(false);
+    }
+
+    public void SetCastState()
+    {
+        distanceIndicator.transform.parent.gameObject.SetActive(true);
+        distanceIndicator.fillAmount = 0;
+    }
+
+    public void SetWaitState()
+    {
+        SetAnimatorState(1);
+    }
+
+    public void SetCatchState()
+    {
+        CatchingUI.SetActive(true);
+        SuccessIndicator.fillAmount = 0f;
+
+        FishIndicator.GetComponent<RectTransform>().localPosition = new Vector3(0f, -336f, 0f);
+        RodIndicator.GetComponent<RectTransform>().localPosition = new Vector3(0f, -336f, 0f);
+    }
+
+    private void OnCastAnimationEnds()
+    {
+        SetAnimatorState(2);
     }
 }

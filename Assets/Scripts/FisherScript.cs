@@ -1,16 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FisherScript : MonoBehaviour
 {
-    private Animator animator;
-    private void Start()
+    public event Action castAnimationEnds;
+
+    void OnCastAnimationEnds()
     {
-        animator = GetComponent<Animator>();
-    }
-    void ResetAnimatorState()
-    {
-        animator.SetInteger("State", 0);
+        castAnimationEnds.Invoke();
     }
 }
