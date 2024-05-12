@@ -11,4 +11,6 @@ public class FishSO : ScriptableObject
     public float MaxWeight;
     public float MinWeight;
     public float PriceCoef;
+    public Sprite Image;
+    public bool isUnlocked;
 }
