@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class IdleState : GameState
 {
@@ -11,6 +12,8 @@ public class IdleState : GameState
     public override void EnterState()
     {
         base.EnterState();
+
+        Debug.Log("IDLE");
 
         gameManager.SetIdleState();
     }
@@ -26,7 +29,10 @@ public class IdleState : GameState
 
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            stateMachine.ChangeState(gameManager.CastState);
+            if (!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+            {
+                stateMachine.ChangeState(gameManager.CastState);
+            }
         }
     }
 

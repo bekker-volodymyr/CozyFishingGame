@@ -12,10 +12,7 @@ public class CatchState : GameState
 
     private float rodSpeed = 0.5f;
 
-    private bool isColliding = true;
-
-    private bool isTrembleUp = true;
-    private float tremblinValue = 0.5f;
+    private bool isColliding;
 
     public CatchState(StateMachine stateMachine, FishingManager gameManager) : base(stateMachine, gameManager)
     {
@@ -26,22 +23,23 @@ public class CatchState : GameState
         base.EnterState();
 
         successNewValue = 0.01f;
+        isColliding = true;
 
         fishTransform = gameManager.FishIndicator.GetComponent<RectTransform>();
         rodTransform = gameManager.RodIndicator.GetComponent<RectTransform>();
 
         gameManager.SetCatchState();
 
-        gameManager.rodScript.CollisionEnter += ToggleColliding;
-        gameManager.rodScript.CollisionExit += ToggleColliding;
+        gameManager.rodScript.CollisionEnter += SetCollidingTrue;
+        gameManager.rodScript.CollisionExit += SetCollidingFalse;
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
-        gameManager.rodScript.CollisionEnter -= ToggleColliding;
-        gameManager.rodScript.CollisionExit -= ToggleColliding;
+        gameManager.rodScript.CollisionEnter -= SetCollidingTrue;
+        gameManager.rodScript.CollisionExit -= SetCollidingFalse;
     }
 
     public override void FrameUpdate()
@@ -68,9 +66,20 @@ public class CatchState : GameState
             stateMachine.ChangeState(gameManager.IdleState);
         }
 
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
-            rodTransform.Translate(Vector3.up * Time.deltaTime * rodSpeed);
+            // Iterate through each touch
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+
+                // Check if the touch phase is either Began or Moved
+                if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+                {
+                    // Move the rod only when there's a touch
+                    rodTransform.Translate(Vector3.up * Time.deltaTime * rodSpeed);
+                }
+            }
         }
     }
 
@@ -83,16 +92,13 @@ public class CatchState : GameState
         //FishTremblin();
     }
 
-    private void ToggleColliding()
+    private void SetCollidingTrue()
     {
-        isColliding = !isColliding;
+        isColliding = true;
     }
 
-    //private void FishTremblin()
-    //{
-    //    Vector3 currentPos = fishTransform.localPosition;
-    //    tremblinValue *= isTrembleUp ? 1 : -1;
-    //    fishTransform.localPosition = new Vector3(currentPos.x, currentPos.y - tremblinValue, currentPos.z);
-    //    isTrembleUp = !isTrembleUp;
-    //}
+    private void SetCollidingFalse()
+    {
+        isColliding = false;
+    }
 }
