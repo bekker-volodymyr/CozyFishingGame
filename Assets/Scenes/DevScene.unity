@@ -259,6 +259,11 @@ MonoBehaviour:
   lockedImage: {fileID: 21300000, guid: c0e695f02a615ac4c8cc87249ca25d54, type: 3}
   fishListParent: {fileID: 652102312}
   fishButtonPrefab: {fileID: 1373214943052701122, guid: fb1f2cb9b6b4cb747aa1d6c4880c2b05, type: 3}
+  fishCought: {fileID: 1889371594}
+  coinsEarned: {fileID: 1771404037}
+  title: {fileID: 579955287}
+  description: {fileID: 90298608}
+  image: {fileID: 875721375}
 --- !u!1 &90298606
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +386,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -19.926645, z: -394.7289, w: -218.81534}
+  m_margin: {x: 0, y: -55.586308, z: -394.7289, w: -218.81534}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1419,7 +1424,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -32.103577, w: -40.551918}
+  m_margin: {x: -156.18256, y: 0, z: -138.96526, w: -87.13269}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1450,7 +1455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &605295067
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1943,6 +1948,7 @@ MonoBehaviour:
   fisherAnimator: {fileID: 1754552980}
   fisherSpriteRenderer: {fileID: 1754552981}
   fisherScript: {fileID: 1754552983}
+  uiManager: {fileID: 32859212}
 --- !u!4 &833054404
 Transform:
   m_ObjectHideFlags: 0
@@ -2879,7 +2885,7 @@ GameObject:
   - component: {fileID: 1485311569}
   - component: {fileID: 1485311568}
   m_Layer: 5
-  m_Name: CooinsEarned_Panel
+  m_Name: CoinsEarned_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

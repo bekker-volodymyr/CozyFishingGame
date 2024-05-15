@@ -7,6 +7,13 @@ public class FishingManager : MonoBehaviour
 {
     [SerializeField] private FishStorageSO fishes;
 
+    #region Stats
+
+    private int fishCought = 0;
+    private float coinsEarned = 0;
+
+    #endregion
+
     #region State Machine
 
     public StateMachine StateMachine { get;set; }
@@ -52,6 +59,13 @@ public class FishingManager : MonoBehaviour
 
     #endregion
 
+    #region Menu
+
+    [Space]
+    [SerializeField]  private UIManager uiManager;
+
+    #endregion
+
     private void Start()
     {
         fisherScript.castAnimationEnds += OnCastAnimationEnds;
@@ -64,6 +78,11 @@ public class FishingManager : MonoBehaviour
         CatchState = new CatchState(StateMachine, this);
 
         StateMachine.Initialize(IdleState);
+
+        fishCought = PlayerPrefs.GetInt("fishCought", 0);
+        coinsEarned = PlayerPrefs.GetFloat("coinsEarned", 0);
+
+        uiManager.InitUI(fishCought, coinsEarned);
     }
 
     void Update()
@@ -162,6 +181,9 @@ public class FishingManager : MonoBehaviour
         SetAnimatorState(0);
         distanceIndicator.transform.parent.gameObject.SetActive(false);
         CatchingUI.SetActive(false);
+
+        catchedFish = null;
+        catchedFishWeight = 0;
     }
 
     public void SetCastState()
@@ -187,8 +209,26 @@ public class FishingManager : MonoBehaviour
         fishScript.InitJump();
     }
 
+    public void CatchFish()
+    {
+        catchedFish.isUnlocked = true;
+
+        fishCought++;
+
+        coinsEarned += catchedFishWeight * catchedFish.PriceCoef;
+
+        SaveStats();
+        uiManager.UpdateStats(fishCought, coinsEarned);
+    }
+
     private void OnCastAnimationEnds()
     {
         SetAnimatorState(2);
+    }
+
+    private void SaveStats()
+    {
+        PlayerPrefs.SetInt("fishCought", fishCought);
+        PlayerPrefs.SetFloat("coinsEarned", coinsEarned);
     }
 }

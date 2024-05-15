@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,10 @@ using UnityEngine.UI;
 
 public class FishButton : MonoBehaviour
 {
-    private Image buttonImage;
+    [SerializeField] private Image buttonImage;
     private FishSO buttonFish;
 
-    private void Start()
-    {
-        buttonImage = GetComponent<Image>();
-    }
+    public event Action<FishSO> FishClickEvent;
 
     public void InitButton(FishSO fishSO)
     {
@@ -25,6 +23,6 @@ public class FishButton : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log($"Click on {buttonFish.Title}");
+        FishClickEvent?.Invoke(buttonFish);
     }
 }

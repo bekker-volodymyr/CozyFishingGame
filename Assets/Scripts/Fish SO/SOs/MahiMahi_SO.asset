@@ -20,3 +20,5 @@ MonoBehaviour:
   MaxWeight: 30
   MinWeight: 10
   PriceCoef: 1.7
+  Image: {fileID: 0}
+  isUnlocked: 0

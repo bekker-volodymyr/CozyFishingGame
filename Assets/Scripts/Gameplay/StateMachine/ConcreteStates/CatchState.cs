@@ -33,6 +33,11 @@ public class CatchState : GameState
 
         gameManager.rodScript.CollisionEnter -= SetCollidingTrue;
         gameManager.rodScript.CollisionExit -= SetCollidingFalse;
+
+        if(successNewValue == 1f)
+        {
+            gameManager.CatchFish();
+        }
     }
 
     public override void FrameUpdate()

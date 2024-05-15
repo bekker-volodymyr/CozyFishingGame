@@ -40,15 +40,12 @@ public class FishScript : MonoBehaviour
         direction = Random.value > 0.5 ? 1  : -1;
 
         jumpPos = direction == 1 ? Random.Range(rectTransform.localPosition.y, maxY) : Random.Range(minY, rectTransform.localPosition.y);
-
-        Debug.Log($"jumpPos is {jumpPos}");
     }
 
     void Update()
     {
         if (!onDelay)
         {
-
             float newY = rectTransform.localPosition.y + direction * speed * Time.deltaTime;
 
             if (direction == 1)
