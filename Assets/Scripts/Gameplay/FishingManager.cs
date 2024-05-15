@@ -39,6 +39,7 @@ public class FishingManager : MonoBehaviour
     [field: SerializeField] public GameObject FishIndicator { get; set; }
     [field: SerializeField] public GameObject RodIndicator { get; set; }
     [SerializeField] public RodScript rodScript;
+    [SerializeField] private FishScript fishScript;
     #endregion
 
     #region Fisher Components
@@ -144,6 +145,9 @@ public class FishingManager : MonoBehaviour
         // Generate a random weight for the selected fish within its specified range
         float weight = Random.Range(selectedFish.MinWeight, selectedFish.MaxWeight);
 
+        catchedFish = selectedFish;
+        catchedFishWeight = weight;
+
         // Now you have the selected fish and its weight
         Debug.Log("Generated fish: " + selectedFish.Title + ", Weight: " + weight);
     }
@@ -178,6 +182,9 @@ public class FishingManager : MonoBehaviour
 
         FishIndicator.GetComponent<RectTransform>().localPosition = new Vector3(0f, -336f, 0f);
         RodIndicator.GetComponent<RectTransform>().localPosition = new Vector3(0f, -336f, 0f);
+
+        fishScript.SetValues(catchedFish.Rarity * 50f + 150f);
+        fishScript.InitJump();
     }
 
     private void OnCastAnimationEnds()

@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class CatchState : GameState
 {
-    private RectTransform fishTransform;
-    private RectTransform rodTransform;
-
     private float successNewValue;
 
     private float increaseSpeed = 0.35f;
     private float decreaseSpeed = 0.55f;
-
-    private float rodSpeed = 0.5f;
 
     private bool isColliding;
 
@@ -22,11 +17,9 @@ public class CatchState : GameState
     {
         base.EnterState();
 
-        successNewValue = 0.01f;
+        successNewValue = 0.1f;
+        gameManager.SuccessIndicator.fillAmount = successNewValue;
         isColliding = true;
-
-        fishTransform = gameManager.FishIndicator.GetComponent<RectTransform>();
-        rodTransform = gameManager.RodIndicator.GetComponent<RectTransform>();
 
         gameManager.SetCatchState();
 
@@ -45,7 +38,7 @@ public class CatchState : GameState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-
+        
         if (isColliding)
         {
             successNewValue += increaseSpeed * Time.deltaTime;
@@ -65,22 +58,6 @@ public class CatchState : GameState
             successNewValue = 0f;
             stateMachine.ChangeState(gameManager.IdleState);
         }
-
-        if (Input.touchCount > 0)
-        {
-            // Iterate through each touch
-            for (int i = 0; i < Input.touchCount; i++)
-            {
-                Touch touch = Input.GetTouch(i);
-
-                // Check if the touch phase is either Began or Moved
-                if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
-                {
-                    // Move the rod only when there's a touch
-                    rodTransform.Translate(Vector3.up * Time.deltaTime * rodSpeed);
-                }
-            }
-        }
     }
 
     public override void FrameLateUpdate()
@@ -88,8 +65,6 @@ public class CatchState : GameState
         base.FrameLateUpdate();
 
         gameManager.SuccessIndicator.fillAmount = successNewValue;
-
-        //FishTremblin();
     }
 
     private void SetCollidingTrue()
