@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +66,8 @@ public class FishingManager : MonoBehaviour
 
     private void Start()
     {
+        // PlayerPrefs.DeleteAll();
+
         fisherScript.castAnimationEnds += OnCastAnimationEnds;
 
         StateMachine = new StateMachine();
