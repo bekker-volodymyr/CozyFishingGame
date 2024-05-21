@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class FishingManager : MonoBehaviour
 {
@@ -45,6 +46,12 @@ public class FishingManager : MonoBehaviour
     [field: SerializeField] public GameObject RodIndicator { get; set; }
     [SerializeField] public RodScript rodScript;
     [SerializeField] private FishScript fishScript;
+    [Space]
+    [SerializeField] private Animator pullTextAnimator;
+    [Space]
+    [SerializeField] private Animator catchedFishAnimator;
+    [SerializeField] private GameObject catchedFishGO;
+    [SerializeField] private SpriteRenderer catchedFishSprite;
     #endregion
 
     #region Fisher Components
@@ -64,6 +71,12 @@ public class FishingManager : MonoBehaviour
 
     #endregion
 
+    #region Save/Load
+
+    private PlayerData playerData;
+
+    #endregion
+
     private void Start()
     {
         // PlayerPrefs.DeleteAll();
@@ -79,10 +92,17 @@ public class FishingManager : MonoBehaviour
 
         StateMachine.Initialize(IdleState);
 
-        fishCought = PlayerPrefs.GetInt("fishCought", 0);
-        coinsEarned = PlayerPrefs.GetFloat("coinsEarned", 0);
+        playerData = PlayerPrefsManager.LoadPlayerData();
 
-        uiManager.InitUI(fishCought, coinsEarned);
+        if(playerData == null)
+        {
+            playerData = new PlayerData();
+            playerData.fishCought = 0;
+            playerData.coinsEarned = 0;
+            playerData.unlockedFishes = new List<FishSO>();
+        }
+
+        uiManager.InitUI(playerData);
     }
 
     void Update()
@@ -211,14 +231,16 @@ public class FishingManager : MonoBehaviour
 
     public void CatchFish()
     {
-        catchedFish.isUnlocked = true;
+        playerData.unlockedFishes.Add(catchedFish);
+        playerData.fishCought++;
+        playerData.coinsEarned += catchedFishWeight * catchedFish.PriceCoef;
+        PlayerPrefsManager.SavePlayerData(playerData);
 
-        fishCought++;
+        uiManager.UpdateStats(playerData);
 
-        coinsEarned += catchedFishWeight * catchedFish.PriceCoef;
-
-        SaveStats();
-        uiManager.UpdateStats(fishCought, coinsEarned);
+        catchedFishSprite.sprite = catchedFish.Image;
+        catchedFishGO.SetActive(true);
+        catchedFishAnimator.SetTrigger("Catched");
     }
 
     private void OnCastAnimationEnds()
@@ -226,9 +248,8 @@ public class FishingManager : MonoBehaviour
         SetAnimatorState(2);
     }
 
-    private void SaveStats()
+    public void PullTextTrigger()
     {
-        PlayerPrefs.SetInt("fishCought", fishCought);
-        PlayerPrefs.SetFloat("coinsEarned", coinsEarned);
+        pullTextAnimator.SetTrigger("ShowUp");
     }
 }

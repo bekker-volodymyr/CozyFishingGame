@@ -82,6 +82,7 @@ public class WaitState : GameState
             {
                 // Notify the player that the countdown has ended
                 // TODO: IN GAME EFFECT
+                gameManager.PullTextTrigger();
                 Debug.Log("PULL!");
                 isBites = true;
                 catchTimer = catchDelay;

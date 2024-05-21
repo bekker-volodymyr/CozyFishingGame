@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,31 +26,38 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private Image image;
 
-    public void InitUI(int fishCought, float coinsEarned)
+    private event Action<List<FishSO>> unlockFishes;
+
+    public void InitUI(PlayerData playerData)
     {
-        this.fishCought.text = fishCought.ToString();
-        this.coinsEarned.text = coinsEarned.ToString();
+        this.fishCought.text = playerData.fishCought.ToString();
+        this.coinsEarned.text = playerData.coinsEarned.ToString();
 
         ResetDescription();
 
-        InitButtons();
+        InitButtons(playerData.unlockedFishes);
     }
 
-    public void UpdateStats(int fishCought, float coinsEarned)
+    public void UpdateStats(PlayerData playerData)
     {
-        this.fishCought.text = fishCought.ToString();
-        this.coinsEarned.text = coinsEarned.ToString();
+        this.fishCought.text = playerData.fishCought.ToString();
+        this.coinsEarned.text = playerData.coinsEarned.ToString();
+
+        unlockFishes(playerData.unlockedFishes);
     }
 
-    private void InitButtons()
+    private void InitButtons(List<FishSO> unlockedFishes)
     {
         foreach (var fish in fishStorage.fishes)
         {
             GameObject newButton = Instantiate(fishButtonPrefab);
             FishButton btn = newButton.GetComponent<FishButton>();
-            btn.InitButton(fish);
+            bool isUnlocked = unlockedFishes.Contains(fish);
+            btn.InitButton(fish, isUnlocked);
             btn.FishClickEvent += OnFishClick;
-            
+
+            unlockFishes += btn.OnUnlockEvent;
+
             newButton.transform.SetParent(fishListParent.transform, false);
         }
     }
@@ -60,9 +69,9 @@ public class UIManager : MonoBehaviour
         image.sprite = lockedImage;
     }
 
-    private void OnFishClick(FishSO fish)
+    private void OnFishClick(FishSO fish, bool isUnlocked)
     {
-        if (fish.isUnlocked)
+        if (isUnlocked)
         {
             title.text = fish.Title;
             description.text = fish.Description;

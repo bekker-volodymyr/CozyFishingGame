@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FishScript : MonoBehaviour
 {
-    private RectTransform rectTransform;
+    [SerializeField] private RectTransform rectTransform;
 
     private float speed = 150f;
 
@@ -15,15 +15,11 @@ public class FishScript : MonoBehaviour
 
     private bool onDelay = false;
 
-
-    private void Start()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
-
     public void SetValues(float speed)
     {
         this.speed = speed;
+
+        Debug.Log(rectTransform.localPosition);
     }
 
     public void InitJump()
