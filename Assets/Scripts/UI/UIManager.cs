@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Space]
     [SerializeField] private FishStorageSO fishStorage;
 
     [Space]

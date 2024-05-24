@@ -69,6 +69,8 @@ public class WaitState : GameState
             if (catchTimer <= 0)
             {
                 Debug.Log("Fish lost!");
+                gameManager.PlaySound(SoundType.LostCatch);
+                gameManager.TextTrigger(TextType.Lost);
                 stateMachine.ChangeState(gameManager.IdleState);
             }
         }
@@ -77,12 +79,10 @@ public class WaitState : GameState
         {
             biteTimer -= Time.deltaTime;
 
-            // Check if countdown has ended
             if (biteTimer <= 0)
             {
-                // Notify the player that the countdown has ended
-                // TODO: IN GAME EFFECT
-                gameManager.PullTextTrigger();
+                gameManager.TextTrigger(TextType.Pull);
+                gameManager.PlaySound(SoundType.PullSound);
                 Debug.Log("PULL!");
                 isBites = true;
                 catchTimer = catchDelay;
@@ -92,6 +92,7 @@ public class WaitState : GameState
             {
                 {
                     Debug.Log("Rod back!");
+                    gameManager.PlaySound(SoundType.RodBack);
                     stateMachine.ChangeState(gameManager.IdleState);
                 }
             }

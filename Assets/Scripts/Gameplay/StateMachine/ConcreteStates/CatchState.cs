@@ -36,7 +36,14 @@ public class CatchState : GameState
 
         if(successNewValue == 1f)
         {
+            gameManager.TextTrigger(TextType.Catch);
+            gameManager.PlaySound(SoundType.SuccessCatch);
             gameManager.CatchFish();
+        }
+        else
+        {
+            gameManager.TextTrigger(TextType.Lost);
+            gameManager.PlaySound(SoundType.LostCatch);
         }
     }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class FishingManager : MonoBehaviour
 {
+    [Space]
     [SerializeField] private FishStorageSO fishes;
 
     #region Stats
@@ -47,8 +48,6 @@ public class FishingManager : MonoBehaviour
     [SerializeField] public RodScript rodScript;
     [SerializeField] private FishScript fishScript;
     [Space]
-    [SerializeField] private Animator pullTextAnimator;
-    [Space]
     [SerializeField] private Animator catchedFishAnimator;
     [SerializeField] private GameObject catchedFishGO;
     [SerializeField] private SpriteRenderer catchedFishSprite;
@@ -75,6 +74,24 @@ public class FishingManager : MonoBehaviour
 
     private PlayerData playerData;
 
+    #endregion
+
+    #region Audio
+    [Space]
+    [SerializeField] private AudioSource ambianceAudiouSource;
+    [SerializeField] private AudioSource sfxAudioSource;
+    [SerializeField] private AudioClip rodCastSound;
+    [SerializeField] private AudioClip rodOutSound;
+    [SerializeField] private AudioClip successCatch;
+    [SerializeField] private AudioClip lostCatch;
+    [SerializeField] private AudioClip PullSound;
+    #endregion
+
+    #region Text Notifications
+    [Space]
+    [SerializeField] private Animator pullTextAnimator;
+    [SerializeField] private Animator lostTextAnimator;
+    [SerializeField] private Animator catchTextAnimator;
     #endregion
 
     private void Start()
@@ -248,8 +265,50 @@ public class FishingManager : MonoBehaviour
         SetAnimatorState(2);
     }
 
-    public void PullTextTrigger()
+    public void TextTrigger(TextType text)
     {
-        pullTextAnimator.SetTrigger("ShowUp");
+        switch (text)
+        {
+            case TextType.Pull:
+                pullTextAnimator.SetTrigger("ShowUp");
+                break;
+            case TextType.Lost:
+                lostTextAnimator.SetTrigger("ShowUp");
+                break;
+            case TextType.Catch:
+                catchTextAnimator.SetTrigger("ShowUp");
+                break;
+            default:
+                Debug.Log($"Unknown text notification type: {text}");
+                break;
+        }
+    }
+
+    public void PlaySound(SoundType sound)
+    {
+        switch(sound)
+        {
+            case SoundType.SuccessCatch:
+                sfxAudioSource.clip = successCatch; break;
+            case SoundType.LostCatch:
+                sfxAudioSource.clip = lostCatch; break;
+            case SoundType.RodCast:
+                sfxAudioSource.clip = rodCastSound; break;
+            case SoundType.RodBack:
+                sfxAudioSource.clip = rodOutSound; break;
+            case SoundType.PullSound:
+                sfxAudioSource.clip = PullSound; break;
+            default:
+                Debug.Log($"Unknown sound type: {sound}");
+                break;
+        }
+
+        sfxAudioSource.Play(); 
+    }
+
+    public void SetVolume(float value)
+    {
+        ambianceAudiouSource.volume = value;
+        sfxAudioSource.volume = value;
     }
 }

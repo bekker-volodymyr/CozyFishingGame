@@ -28,6 +28,7 @@ public class CastState : GameState
         base.ExitState();
 
         gameManager.GenerateFish(newValue);
+        gameManager.PlaySound(SoundType.RodCast);
     }
 
     public override void FrameUpdate()
