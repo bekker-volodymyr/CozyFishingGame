@@ -20,7 +20,7 @@ public class RodScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
+        if (/*Input.touchCount > 0*/ Input.GetMouseButton(0))
         {
             body.AddForce(Vector3.up * Time.deltaTime * rodSpeed);
         }

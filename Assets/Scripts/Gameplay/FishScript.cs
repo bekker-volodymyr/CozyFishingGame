@@ -5,26 +5,27 @@ public class FishScript : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransform;
 
-    private float speed = 150f;
+    private float speed;
 
-    private float minY = -336f;
-    private float maxY = 336;
+    private float minY = 0f;
+    private float maxY;
     private float jumpPos;
     private float jumpStartPos;
     private int direction = 1; // 1 is up -1 is down
 
     private bool onDelay = false;
 
-    public void SetValues(float speed)
+    public void SetValues(float speed, float maxY)
     {
         this.speed = speed;
 
-        Debug.Log(rectTransform.localPosition);
+        this.maxY = maxY - rectTransform.rect.height / 2;
     }
 
     public void InitJump()
     {
         GetJumpPosition();
+        onDelay = false;
     }
 
     private void GetJumpPosition()
@@ -63,9 +64,9 @@ public class FishScript : MonoBehaviour
 
     private IEnumerator Delay()
     {
-        yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+        yield return new WaitForSeconds(Random.Range(0.5f, 0.9f));
 
         onDelay = false;
-        GetJumpPosition();
+        InitJump();
     }
 }

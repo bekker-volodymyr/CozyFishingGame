@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class IdleState : GameState
 {
+    private float initDelay = 0.3f;
+    private float initDelayTimer;
+
     public IdleState(StateMachine stateMachine, FishingManager gameManager) : base(stateMachine, gameManager)
     {
     }
@@ -14,6 +17,8 @@ public class IdleState : GameState
         base.EnterState();
 
         Debug.Log("IDLE");
+
+        initDelayTimer = initDelay;
 
         gameManager.SetIdleState();
     }
@@ -27,12 +32,23 @@ public class IdleState : GameState
     {
         base.FrameUpdate();
 
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        if (initDelayTimer > 0)
         {
-            if (!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+            initDelayTimer -= Time.deltaTime;
+            return;
+        }
+
+        if (/*(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)*/ Input.GetMouseButtonDown(0))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 stateMachine.ChangeState(gameManager.CastState);
             }
+
+            //if (!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+            //{
+            //    stateMachine.ChangeState(gameManager.CastState);
+            //}
         }
     }
 

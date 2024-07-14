@@ -19,8 +19,6 @@ public static class PlayerPrefsManager
         {
             string jsonData = PlayerPrefs.GetString("PlayerData");
             return JsonUtility.FromJson<PlayerData>(jsonData);
-
-            Debug.Log(jsonData);
         }
         else
         {

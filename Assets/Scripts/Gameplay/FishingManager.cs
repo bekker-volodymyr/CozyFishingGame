@@ -42,6 +42,7 @@ public class FishingManager : MonoBehaviour
 
     [Space]
     [SerializeField] public GameObject CatchingUI;
+    [SerializeField] private GameObject bouncingPanel;
     [SerializeField] public Image SuccessIndicator;
     [field: SerializeField] public GameObject FishIndicator { get; set; }
     [field: SerializeField] public GameObject RodIndicator { get; set; }
@@ -237,12 +238,13 @@ public class FishingManager : MonoBehaviour
     public void SetCatchState()
     {
         CatchingUI.SetActive(true);
-        SuccessIndicator.fillAmount = 0f;
 
-        FishIndicator.GetComponent<RectTransform>().localPosition = new Vector3(0f, -336f, 0f);
-        RodIndicator.GetComponent<RectTransform>().localPosition = new Vector3(0f, -336f, 0f);
+        RectTransform bouncingPanelRT = bouncingPanel.GetComponent<RectTransform>();
 
-        fishScript.SetValues(catchedFish.Rarity * 50f + 150f);
+        float panelHeight = bouncingPanelRT.rect.height;
+        float topY = panelHeight / 2;
+
+        fishScript.SetValues(catchedFish.Rarity * 50f + 100f, topY);
         fishScript.InitJump();
     }
 

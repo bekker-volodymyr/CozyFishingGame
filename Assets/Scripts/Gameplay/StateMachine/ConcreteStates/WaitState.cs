@@ -58,7 +58,7 @@ public class WaitState : GameState
 
         if (isBites)
         {
-            if (Input.touchCount > 0)
+            if (/*Input.touchCount > 0*/ Input.GetMouseButtonDown(0))
             {
                 Debug.Log("CATCH!");
                 stateMachine.ChangeState(gameManager.CatchState);
@@ -88,7 +88,7 @@ public class WaitState : GameState
                 catchTimer = catchDelay;
                 biteCountdownStarted = false;
             }
-            else if (Input.touchCount > 0)
+            else if (/*Input.touchCount > 0*/ Input.GetMouseButtonDown(0))
             {
                 {
                     Debug.Log("Rod back!");

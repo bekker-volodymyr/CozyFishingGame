@@ -41,7 +41,7 @@ public class CastState : GameState
         if (isGrow) newValue += speed * Time.deltaTime;
         else newValue -= speed * Time.deltaTime;
 
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended)
+        if (/*Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended*/ Input.GetMouseButtonUp(0))
         {
             gameManager.SetAnimatorState(1);
             stateMachine.ChangeState(gameManager.WaitState);

@@ -3,11 +3,15 @@ using UnityEngine;
 public class CatchState : GameState
 {
     private float successNewValue;
+    private float startValue = 0.2f;
 
-    private float increaseSpeed = 0.35f;
-    private float decreaseSpeed = 0.55f;
+    private float increaseSpeed = 0.25f;
+    private float decreaseSpeed = 0.3f;
 
     private bool isColliding;
+
+    private float initDelay = 0.5f;
+    private float initDelayTimer;
 
     public CatchState(StateMachine stateMachine, FishingManager gameManager) : base(stateMachine, gameManager)
     {
@@ -17,9 +21,11 @@ public class CatchState : GameState
     {
         base.EnterState();
 
-        successNewValue = 0.1f;
+        successNewValue = startValue;
         gameManager.SuccessIndicator.fillAmount = successNewValue;
         isColliding = true;
+
+        initDelayTimer = initDelay;
 
         gameManager.SetCatchState();
 
@@ -50,7 +56,13 @@ public class CatchState : GameState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        
+
+        if (initDelayTimer > 0)
+        {
+            initDelayTimer -= Time.deltaTime;
+            return;
+        }
+
         if (isColliding)
         {
             successNewValue += increaseSpeed * Time.deltaTime;
