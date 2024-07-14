@@ -244,7 +244,11 @@ public class FishingManager : MonoBehaviour
         float panelHeight = bouncingPanelRT.rect.height;
         float topY = panelHeight / 2;
 
-        fishScript.SetValues(catchedFish.Rarity * 50f + 100f, topY);
+        RectTransform rodRT = rodScript.GetComponent<RectTransform>();
+
+        rodRT.anchoredPosition = new Vector3(0f, 0f + rodRT.rect.height / 2f, 0f);
+
+        fishScript.SetValues(catchedFish.Speed, topY, panelHeight * 0.1f);
         fishScript.InitJump();
     }
 

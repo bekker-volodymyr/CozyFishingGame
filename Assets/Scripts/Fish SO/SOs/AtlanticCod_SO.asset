@@ -17,8 +17,8 @@ MonoBehaviour:
     white flesh. Weighing between 5 to 50 kilograms, it's moderately rare and commands
     a good price in markets worldwide.
   Rarity: 3
+  Speed: 125
   MaxWeight: 50
   MinWeight: 5
   PriceCoef: 1.6
   Image: {fileID: 21300000, guid: cea61f79d7cf09a44b5aebb05ec0de18, type: 3}
-  isUnlocked: 0

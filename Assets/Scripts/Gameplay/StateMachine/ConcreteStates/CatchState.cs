@@ -3,10 +3,10 @@ using UnityEngine;
 public class CatchState : GameState
 {
     private float successNewValue;
-    private float startValue = 0.2f;
+    private float startValue = 0.25f;
 
     private float increaseSpeed = 0.25f;
-    private float decreaseSpeed = 0.3f;
+    private float decreaseSpeed = 0.35f;
 
     private bool isColliding;
 

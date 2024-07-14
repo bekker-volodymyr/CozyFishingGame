@@ -17,8 +17,8 @@ MonoBehaviour:
     in freshwater lakes. Weighing between 0.1 to 0.5 kilograms, it's a beginner-friendly
     catch and sells at a modest price.
   Rarity: 2
+  Speed: 100
   MaxWeight: 0.5
   MinWeight: 0.1
   PriceCoef: 0.8
   Image: {fileID: 21300000, guid: b51e7ddfa1f29114a992acd296224149, type: 3}
-  isUnlocked: 0

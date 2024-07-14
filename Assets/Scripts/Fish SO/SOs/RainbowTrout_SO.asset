@@ -17,8 +17,8 @@ MonoBehaviour:
     catch. It ranges from half a kilogram to 3.5 kilograms and fetches a good price
     due to its popularity among anglers.
   Rarity: 3
+  Speed: 125
   MaxWeight: 3.5
   MinWeight: 0.5
   PriceCoef: 1.2
   Image: {fileID: 21300000, guid: 69fe9b1c0d4d9704db32394cce30dfec, type: 3}
-  isUnlocked: 0

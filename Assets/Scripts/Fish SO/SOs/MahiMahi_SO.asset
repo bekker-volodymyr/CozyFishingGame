@@ -17,8 +17,8 @@ MonoBehaviour:
     a thrilling catch for experienced anglers. Weighing between 10 to 30 kilograms,
     it fetches a good price due to its taste and rarity.
   Rarity: 4
+  Speed: 150
   MaxWeight: 30
   MinWeight: 10
   PriceCoef: 1.7
   Image: {fileID: 21300000, guid: 873052631784014449d6c0f9a5e22dbf, type: 3}
-  isUnlocked: 0

@@ -9,17 +9,23 @@ public class FishScript : MonoBehaviour
 
     private float minY = 0f;
     private float maxY;
+    private float minJumpDistance;
     private float jumpPos;
     private float jumpStartPos;
     private int direction = 1; // 1 is up -1 is down
 
     private bool onDelay = false;
 
-    public void SetValues(float speed, float maxY)
+    public void SetValues(float speed, float maxY, float minJumpDistance)
     {
         this.speed = speed;
 
-        this.maxY = maxY - rectTransform.rect.height / 2;
+        this.minJumpDistance = minJumpDistance;
+
+        this.maxY = maxY - rectTransform.rect.height / 2f;
+        minY = 0f + rectTransform.rect.height / 2f;
+
+        rectTransform.anchoredPosition = new Vector3(0f, minY, 0f);
     }
 
     public void InitJump()
@@ -30,18 +36,30 @@ public class FishScript : MonoBehaviour
 
     private void GetJumpPosition()
     {
-        jumpStartPos = rectTransform.localPosition.y;
+        jumpStartPos = rectTransform.anchoredPosition.y;
 
-        direction = Random.value > 0.5 ? 1  : -1;
+        if (jumpStartPos < minY + minJumpDistance)
+        {
+            direction = 1;
+        }
+        else if (jumpStartPos > maxY - minJumpDistance)
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = Random.value > 0.5 ? 1 : -1;
+        }
 
-        jumpPos = direction == 1 ? Random.Range(rectTransform.localPosition.y, maxY) : Random.Range(minY, rectTransform.localPosition.y);
+
+        jumpPos = direction == 1 ? Random.Range(rectTransform.anchoredPosition.y + minJumpDistance, maxY) : Random.Range(minY, rectTransform.anchoredPosition.y - minJumpDistance);
     }
 
     void Update()
     {
         if (!onDelay)
         {
-            float newY = rectTransform.localPosition.y + direction * speed * Time.deltaTime;
+            float newY = rectTransform.anchoredPosition.y + direction * speed * Time.deltaTime;
 
             if (direction == 1)
             {
@@ -52,7 +70,7 @@ public class FishScript : MonoBehaviour
                 newY = Mathf.Clamp(newY, jumpPos, jumpStartPos);
             }
 
-            rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, newY, rectTransform.localPosition.z);
+            rectTransform.anchoredPosition = new Vector3(0f, newY, 0f);
 
             if (newY == jumpPos)
             {
