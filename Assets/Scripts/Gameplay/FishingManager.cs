@@ -48,10 +48,10 @@ public class FishingManager : MonoBehaviour
     [field: SerializeField] public GameObject RodIndicator { get; set; }
     [SerializeField] public RodScript rodScript;
     [SerializeField] private FishScript fishScript;
+
     [Space]
-    [SerializeField] private Animator catchedFishAnimator;
-    [SerializeField] private GameObject catchedFishGO;
-    [SerializeField] private SpriteRenderer catchedFishSprite;
+    [SerializeField] private CatchedFish _catchedFishObject;
+
     #endregion
 
     #region Fisher Components
@@ -261,9 +261,7 @@ public class FishingManager : MonoBehaviour
 
         uiManager.UpdateStats(playerData);
 
-        catchedFishSprite.sprite = catchedFish.Image;
-        catchedFishGO.SetActive(true);
-        catchedFishAnimator.SetTrigger("Catched");
+        _catchedFishObject.OnCatch(catchedFish.Image);
     }
 
     private void OnCastAnimationEnds()

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class FishScript : MonoBehaviour
         minY = 0f + rectTransform.rect.height / 2f;
 
         rectTransform.anchoredPosition = new Vector3(0f, minY, 0f);
+
     }
 
     public void InitJump()
