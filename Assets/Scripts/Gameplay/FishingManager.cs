@@ -9,8 +9,8 @@ public class FishingManager : MonoBehaviour
 
     #region Stats
 
-    private int fishCought = 0;
-    private float coinsEarned = 0;
+    //private int fishCought = 0;
+    //private float coinsEarned = 0;
 
     #endregion
 

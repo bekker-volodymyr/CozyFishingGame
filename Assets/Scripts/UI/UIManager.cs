@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     [Space]
     [SerializeField] private TextMeshProUGUI fishCought;
-    [SerializeField] private TextMeshProUGUI coinsEarned;
+    // [SerializeField] private TextMeshProUGUI coinsEarned;
 
     [Space]
     [SerializeField] private TextMeshProUGUI title;
@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     public void InitUI(PlayerData playerData)
     {
         this.fishCought.text = playerData.fishCought.ToString();
-        this.coinsEarned.text = playerData.coinsEarned.ToString();
+        // this.coinsEarned.text = playerData.coinsEarned.ToString();
 
         ResetDescription();
 
@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
     public void UpdateStats(PlayerData playerData)
     {
         this.fishCought.text = playerData.fishCought.ToString();
-        this.coinsEarned.text = playerData.coinsEarned.ToString();
+        // this.coinsEarned.text = playerData.coinsEarned.ToString();
 
         unlockFishes(playerData.unlockedFishes);
     }
