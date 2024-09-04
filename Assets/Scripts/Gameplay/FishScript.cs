@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FishScript : MonoBehaviour
 {
+    [Space]
     [SerializeField] private RectTransform rectTransform;
 
     private float speed;

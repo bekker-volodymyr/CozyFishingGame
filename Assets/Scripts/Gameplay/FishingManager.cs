@@ -7,13 +7,6 @@ public class FishingManager : MonoBehaviour
     [Space]
     [SerializeField] private FishStorageSO fishes;
 
-    #region Stats
-
-    //private int fishCought = 0;
-    //private float coinsEarned = 0;
-
-    #endregion
-
     #region State Machine
 
     public StateMachine StateMachine { get;set; }
@@ -26,21 +19,20 @@ public class FishingManager : MonoBehaviour
 
     #region Cast
 
-    [Space]
+    [Header("Casting Objects")]
     [SerializeField] public Image distanceIndicator;
 
     #endregion
 
     #region Generated Fish
 
-    private FishSO catchedFish = null;
-    private float catchedFishWeight = 0;
+    private Fish _generatedFish = null;
 
     #endregion
 
     #region Catch
 
-    [Space]
+    [Header("Catching Objects")]
     [SerializeField] public GameObject CatchingUI;
     [SerializeField] private GameObject bouncingPanel;
     [SerializeField] public Image SuccessIndicator;
@@ -56,7 +48,7 @@ public class FishingManager : MonoBehaviour
 
     #region Fisher Components
 
-    [Space]
+    [Header("Fisher Components")]
     [SerializeField] private GameObject fisher;
     [SerializeField] private Animator fisherAnimator;
     [SerializeField] private SpriteRenderer fisherSpriteRenderer;
@@ -66,7 +58,7 @@ public class FishingManager : MonoBehaviour
 
     #region Menu
 
-    [Space]
+    [Header("Menu Components")]
     [SerializeField]  private UIManager uiManager;
 
     #endregion
@@ -78,7 +70,8 @@ public class FishingManager : MonoBehaviour
     #endregion
 
     #region Audio
-    [Space]
+
+    [Header("Audio Objects")]
     [SerializeField] private AudioSource ambianceAudiouSource;
     [SerializeField] private AudioSource sfxAudioSource;
     [SerializeField] private AudioClip rodCastSound;
@@ -86,13 +79,16 @@ public class FishingManager : MonoBehaviour
     [SerializeField] private AudioClip successCatch;
     [SerializeField] private AudioClip lostCatch;
     [SerializeField] private AudioClip PullSound;
+
     #endregion
 
     #region Text Notifications
-    [Space]
+
+    [Header("Notifications")]
     [SerializeField] private Animator pullTextAnimator;
     [SerializeField] private Animator lostTextAnimator;
     [SerializeField] private Animator catchTextAnimator;
+
     #endregion
 
     private void Start()
@@ -135,78 +131,7 @@ public class FishingManager : MonoBehaviour
 
     public void GenerateFish(float distance)
     {
-        // Define variables to store cumulative rarity and weight probabilities
-        float cumulativeRarityProbability = 0;
-        float cumulativeWeightProbability = 0;
-
-        // Calculate total rarity and weight of all fishes within the distance
-        foreach (FishSO fishSO in fishes.fishes)
-        {
-            float rarityWeight = Mathf.Lerp(0.5f, 1f, distance); // Adjust rarity weight based on distance
-            float weightWeight = Mathf.Lerp(0.5f, 1f, distance); // Adjust weight weight based on distance
-
-            cumulativeRarityProbability += rarityWeight * fishSO.Rarity;
-            cumulativeWeightProbability += weightWeight * (fishSO.MaxWeight - fishSO.MinWeight);
-        }
-
-        // Generate a random value for rarity and weight within the cumulative probability ranges
-        float randomRarity = Random.Range(0f, cumulativeRarityProbability);
-        float randomWeight = Random.Range(0f, cumulativeWeightProbability);
-
-        // Iterate through fishes to find the selected fish based on rarity
-        FishSO selectedFish = null;
-        foreach (FishSO fishSO in fishes.fishes)
-        {
-            float rarityWeight = Mathf.Lerp(0.5f, 1f, distance); // Adjust rarity weight based on distance
-            float weightWeight = Mathf.Lerp(0.5f, 1f, distance); // Adjust weight weight based on distance
-
-            float adjustedRarity = rarityWeight * fishSO.Rarity;
-            float adjustedWeightRange = weightWeight * (fishSO.MaxWeight - fishSO.MinWeight);
-
-            // Check if the random rarity value falls within the current fish's probability range
-            if (randomRarity < adjustedRarity)
-            {
-                selectedFish = fishSO;
-                break;
-            }
-            else
-            {
-                // Subtract the current fish's rarity probability from the random value
-                randomRarity -= adjustedRarity;
-            }
-        }
-
-        // If no fish was selected based on rarity, select one based on weight
-        if (selectedFish == null)
-        {
-            foreach (FishSO fishSO in fishes.fishes)
-            {
-                float weightWeight = Mathf.Lerp(0.5f, 1f, distance); // Adjust weight weight based on distance
-
-                float adjustedWeightRange = weightWeight * (fishSO.MaxWeight - fishSO.MinWeight);
-
-                // Check if the random weight value falls within the current fish's weight range
-                if (randomWeight < adjustedWeightRange)
-                {
-                    selectedFish = fishSO;
-                    break;
-                }
-                else
-                {
-                    // Subtract the current fish's weight range from the random value
-                    randomWeight -= adjustedWeightRange;
-                }
-            }
-        }
-
-        // Generate a random weight for the selected fish within its specified range
-        float weight = Random.Range(selectedFish.MinWeight, selectedFish.MaxWeight);
-
-        catchedFish = selectedFish;
-        catchedFishWeight = weight;
-
-        // Now you have the selected fish and its weight
-        Debug.Log("Generated fish: " + selectedFish.Title + ", Weight: " + weight);
+        _generatedFish = FishGenerator.GenerateFish(distance, fishes);
     }
 
     public void SetAnimatorState(int state)
@@ -220,8 +145,7 @@ public class FishingManager : MonoBehaviour
         distanceIndicator.transform.parent.gameObject.SetActive(false);
         CatchingUI.SetActive(false);
 
-        catchedFish = null;
-        catchedFishWeight = 0;
+        _generatedFish = null;
     }
 
     public void SetCastState()
@@ -248,20 +172,24 @@ public class FishingManager : MonoBehaviour
 
         rodRT.anchoredPosition = new Vector3(0f, 0f + rodRT.rect.height / 2f, 0f);
 
-        fishScript.SetValues(catchedFish.Speed, topY, panelHeight * 0.1f);
+        fishScript.SetValues(_generatedFish.FishType.Speed, topY, panelHeight * 0.1f);
         fishScript.InitJump();
     }
 
     public void CatchFish()
     {
-        playerData.unlockedFishes.Add(catchedFish);
+        Debug.Log($"{_generatedFish.FishType}");
+        if (!playerData.unlockedFishes.Contains(_generatedFish.FishType))
+        {
+            playerData.unlockedFishes.Add(_generatedFish.FishType);
+        }
         playerData.fishCought++;
-        playerData.coinsEarned += catchedFishWeight * catchedFish.PriceCoef;
+        playerData.coinsEarned += _generatedFish.Weight * _generatedFish.FishType.PriceCoef;
         PlayerPrefsManager.SavePlayerData(playerData);
 
         uiManager.UpdateStats(playerData);
 
-        _catchedFishObject.OnCatch(catchedFish.Image);
+        _catchedFishObject.OnCatch(_generatedFish.FishType.Image);
     }
 
     private void OnCastAnimationEnds()
