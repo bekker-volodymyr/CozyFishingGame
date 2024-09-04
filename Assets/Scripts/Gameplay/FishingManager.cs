@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class FishingManager : MonoBehaviour
 {
@@ -85,9 +86,7 @@ public class FishingManager : MonoBehaviour
     #region Text Notifications
 
     [Header("Notifications")]
-    [SerializeField] private Animator pullTextAnimator;
-    [SerializeField] private Animator lostTextAnimator;
-    [SerializeField] private Animator catchTextAnimator;
+    [SerializeField] private TextNotification _textNotification;
 
     #endregion
 
@@ -199,21 +198,7 @@ public class FishingManager : MonoBehaviour
 
     public void TextTrigger(TextType text)
     {
-        switch (text)
-        {
-            case TextType.Pull:
-                pullTextAnimator.SetTrigger("ShowUp");
-                break;
-            case TextType.Lost:
-                lostTextAnimator.SetTrigger("ShowUp");
-                break;
-            case TextType.Catch:
-                catchTextAnimator.SetTrigger("ShowUp");
-                break;
-            default:
-                Debug.Log($"Unknown text notification type: {text}");
-                break;
-        }
+        _textNotification.ShowText(text);
     }
 
     public void PlaySound(SoundType sound)
