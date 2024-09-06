@@ -45,7 +45,7 @@ During development I:
   <img src="https://github.com/user-attachments/assets/3f5c6ffc-c025-452b-8d06-25dcb748fa48" alt="menu" width="450px">
 </p>
 <p>
-  Next to this menu, you'll find a sound volume control and a button to mute or unmute the game entirely.
+  Next to this menu, you'll find a sound volume control and a button to mute or unmute the game entirely. <br>
   <img src="https://github.com/user-attachments/assets/850c93c8-5162-489d-b7ce-e8a283e80188" alt="sound menu">
 </p>
 <p>
