@@ -4,16 +4,13 @@
 
 ## About
 <p>
-  I created this little game fully on my on. That was first time I tried to draw somthing in pixtel-art (or draw anything actually).
+  Cozy Fishing Game is inspired by Stardew Valley fishing mini-game, which is my favorite mechanic in the game. 
 </p>
 <p>
-  It was inspired by Stardew Valley fishing mini-game, wich is my favorite mechanic in the game. 
-</p>
-<p>
-During development I:
+During development I have:
 <ul>
-  <li> Learned to implement the game loop using the <b>State Machine</b> pattern </li>
-  <li> Practiced using <b>Unity Animations</b> for frame-by-frame animations </li>
+  <li> Implemented the game loop using the <b>State Machine</b> pattern </li>
+  <li> Used the <b>Unity Animations</b> for frame-by-frame animations </li>
   <li> Used the <b>DOTween</b> package for quick and simple animations </li>
   <li> Created <b>Unit Tests</b> in Edit Mode </li>
   <li> Created assets in a <b>pixel art</b> style </li>
@@ -25,7 +22,7 @@ During development I:
 
 ## How to Play
 <p>
-  In my game, you help a cute fisherman catch fish at his favorite spot!
+  Help a cute fisherman to catch fish at his favorite spot!
 </p>
 <p>
   To cast the fishing rod, press and hold anywhere on the screen (either with your finger or the left mouse button). An indicator will appear, showing how far you'll cast the rod. Release your finger or mouse button when the bar is closest to the right edge of the indicator — the closer it is to the right, the higher the chance of catching a rare fish!
@@ -33,7 +30,7 @@ During development I:
   <img src="https://github.com/user-attachments/assets/cfba4b9e-3eb6-48e4-8185-f7678a3040f3" alt="distance indicator">
 </p>
 <p>
-  Now, wait for the fish to bite. When this happens, a "PULL" message will appear on the screen. As soon as you see this message, tap anywhere on the screen. Don't miss the moment! <br>
+  Wait for the fish to bite. As soon as the "PULL" message appears, tap anywhere on the screen. Don't miss the moment! <br>
   <img src="https://github.com/user-attachments/assets/2abccdf7-596a-4920-8924-12f4e673242a" alt="pull message">
 </p>
 <p>
@@ -42,13 +39,13 @@ During development I:
   <img src="https://github.com/user-attachments/assets/4e138158-584f-4efb-91f0-30e55e729fb0" alt="reeling menu">
 </p>
 <p>
-  When you catch a fish, it gets added to a special menu where you can view its description and track your total catch. To open this menu, tap the button in the top right corner of the screen.
+  Find describtion of your caught fish at the menu!
   <br>
   <img src="https://github.com/user-attachments/assets/6909e18e-6951-4eb7-a344-17f7becefc73" alt="menu button">
   <img src="https://github.com/user-attachments/assets/3f5c6ffc-c025-452b-8d06-25dcb748fa48" alt="menu" width="450px">
 </p>
 <p>
-  Next to this menu, you'll find a sound volume control and a button to mute or unmute the game entirely. <br>
+  Regulate volume as you wish! <br>
   <img src="https://github.com/user-attachments/assets/850c93c8-5162-489d-b7ce-e8a283e80188" alt="sound menu">
 </p>
 
