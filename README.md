@@ -26,6 +26,7 @@ During development I:
 </p>
 <p>
   To cast the fishing rod, press and hold anywhere on the screen (either with your finger or the left mouse button). An indicator will appear, showing how far you'll cast the rod. Release your finger or mouse button when the bar is closest to the right edge of the indicator — the closer it is to the right, the higher the chance of catching a rare fish!
+  <br>
   <img src="https://github.com/user-attachments/assets/cfba4b9e-3eb6-48e4-8185-f7678a3040f3" alt="distance indicator">
 </p>
 <p>
