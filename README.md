@@ -19,6 +19,9 @@ During development I:
   <li> Created assets in a <b>pixel art</b> style </li>
 </ul>
 </p>
+<p>
+  I only use free assets for sound. Here's the links: <a href="https://assetstore.unity.com/packages/audio/ambient/nature/nature-essentials-208227#description">ambient</a>, <a href="https://assetstore.unity.com/packages/audio/sound-fx/foley/water-splash-pack-14039">splashes</a>
+</p>
 
 ## How to Play
 <p>
@@ -47,8 +50,5 @@ During development I:
 <p>
   Next to this menu, you'll find a sound volume control and a button to mute or unmute the game entirely. <br>
   <img src="https://github.com/user-attachments/assets/850c93c8-5162-489d-b7ce-e8a283e80188" alt="sound menu">
-</p>
-<p>
-  I only use free assets for sound. Here's the links: <a href="https://assetstore.unity.com/packages/audio/ambient/nature/nature-essentials-208227#description">ambient</a>, <a href="https://assetstore.unity.com/packages/audio/sound-fx/foley/water-splash-pack-14039">splashes</a>
 </p>
 
