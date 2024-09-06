@@ -17,7 +17,7 @@ During development I have:
 </ul>
 </p>
 <p>
-  I only use free assets for sound. Here's the links: <a href="https://assetstore.unity.com/packages/audio/ambient/nature/nature-essentials-208227#description">ambient</a>, <a href="https://assetstore.unity.com/packages/audio/sound-fx/foley/water-splash-pack-14039">splashes</a>
+  I use free assets for sound. Here's the links: <a href="https://assetstore.unity.com/packages/audio/ambient/nature/nature-essentials-208227#description">ambient</a>, <a href="https://assetstore.unity.com/packages/audio/sound-fx/foley/water-splash-pack-14039">splashes</a>
 </p>
 
 ## How to Play
